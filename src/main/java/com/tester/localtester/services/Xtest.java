@@ -17,27 +17,36 @@ public class Xtest {
 
         Map<String, String> mailData = new HashMap<>();
 
-        String fileDirectory = "/Users/arnavsatrusal/Downloads/";
-        Reader csvFile = new FileReader(fileDirectory + "Wellness_test_data_2.csv");
+        String fileDirectory = "/Users/sumitjadiya/Downloads/";
+        Reader csvFile = new FileReader(fileDirectory + "Copy of Wellness Pilot - Sheet1.csv");
 
         String[] HEADERS = {
-            "businessType",
-            "productCode",
-            "pincode",
-            "planCode",
-            "policyTerm",
-            "insurerCode",
-            "InsuredTitle",
-            "insuredfirstName",
-            "insuredlastName",
-            "insuredEmail",
-            "insuredgender",
-            "insuredmobile",
-            "insureddob",
-            "city",
-            "pincode",
-            "address1",
-            "Phone"
+                "businessType",
+                "productCode",
+                "planType",
+                "planCode",
+                "policyTerm",
+                "insurerCode",
+                "Insured_title",
+                "insured_firstName",
+                "insured_lastName",
+                "insured_email",
+                "insured_gender",
+                "insured_mobile",
+                "insured_dob",
+                "city",
+                "pincode",
+                "address1",
+                "Phone_Contactability",
+                "_id",
+                "vertical",
+                "creationsource",
+                "issuancedate",
+                "salesdetail_intermediaryloginid",
+                "salesdetail_intermediaryinternalid",
+                "insurer",
+                "planname",
+                "Repcheck"
         };
 
         final String digitalPlanConstant = "digital_Plan";
@@ -73,7 +82,23 @@ public class Xtest {
             XtestModel model = new XtestModel();
             String businessType = record.get("businessType").trim();
             String productCode = record.get("productCode").trim();
+            String planType = record.get("planType").trim();
+            String planCode = record.get("planCode").trim();
+            String policyTerm = record.get("policyTerm").trim();
+            String insurerCode = record.get("insurerCode").trim();
             String pincode = record.get("pincode").trim();
+            String firstName = record.get("insured_firstName").trim();
+            String lastName = record.get("insured_lastName").trim();
+            String mobile = record.get("insured_mobile").trim();
+            String InsuredTitle = record.get("Insured_title").trim();
+            String insuredEmail = record.get("insured_email").trim();
+            String insuredgender = record.get("insured_gender").trim();
+            String insuredmobile = record.get("insured_mobile").trim();
+            String insureddob = record.get("insured_dob").trim();
+            String city = record.get("city").trim();
+            String address1 = record.get("address1").trim();
+
+
 //            String digiPlan = record.get("Digital_Plan").trim();
 //            String actiHealthPlan = record.get("Acti_Health").trim();
 //            String actiHealthPlusPlan = record.get("Acti_Health_Plus").trim();
@@ -102,9 +127,19 @@ public class Xtest {
 //            plans.put(healthAssure, healthAssureItems);
 //            plans.put(svaas, svaasItems);
 //
+            model.setPlanCode(planCode);
             model.setPincode(pincode);
+            model.setInsuredfirstName(firstName);
+            model.setInsuredlastName(lastName);
+            model.setInsuredmobile(mobile);
             model.setProductCode(productCode);
             model.setBusinessType(businessType);
+            model.setInsuredEmail(insuredEmail);
+            model.setInsuredTitle(InsuredTitle);
+            model.setInsuredgender(insuredgender);
+            model.setInsureddob(insureddob);
+            model.setCity(city);
+            model.setAddress1(address1);
 //            model.setPlans(plans);
 //            plans = new HashMap<>();
 //            ekinCareItems = new HashMap<>();
@@ -123,9 +158,22 @@ public class Xtest {
         PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
         String line = null;
         pw.println("[");
-
+        lists.remove(0);
         for (var val : lists) {
-            line = "{\"businessType\":\"" + val.pincode + "\", \"productCode\":" + val.productCode + "},";
+
+            line = """                    
+{"quoteRequest":{"data": {"businessType":"NEW", "productCode": "wellness", "premiumRequest":{"riskInsured":{"planCode":"%plancode%","planType":"INDIVIDUAL","pinCode": "%pincode%","policyTerm":1,"insurerCode":"SVAAS","fullName": "%fullname%","mobile":"%mobile%"}}}}},
+{"proposalRequest":{"personalDetails":{"title":"%title%","firstName":"%firstName%","lastName":"%firstName%","email":"%email%","gender":"%gender%","mobile":"%mobile%","dob":"%dob%","annualSalary":"0"},"registeredAddress":{"city":"%city%","pincode":"%pincode%","address1":"%address1%","address2":""},"otherDetails":{},"insuredMembers":[{"name":"%fullname%","dob":"%dob%","type":"SELF"}]}},
+{"data":{"productCode":"mobile","insurerCode":"HDFC","proposalId":"64be7afb1e22ef213bcb1e8b","referenceId":"AH1I8NWB9C0"}}
+""";
+
+
+            line = line.replace("%plancode%", val.planCode).replace("%pincode%", val.pincode).replace("%fullname%", val.insuredfirstName+" "+val.insuredlastName)
+                    .replace("%mobile%", val.insuredmobile).replace("%title%", val.InsuredTitle).replace("%firstName%", val.insuredfirstName).replace("%lastName%", val.insuredlastName)
+                    .replace("%email%", val.insuredEmail).replace("%gender%", val.insuredgender).replace("%dob%", val.insureddob).replace("%city%", val.city).replace("%address1%", val.address1).replace("\n", "");
+
+//            line = "{\"quoteRequest\":{\"data\": {\"businessType\":\"NEW\", \"productCode\": \"wellness\", \"premiumRequest\":{\"riskInsured\":{\"planCode\":\"" + val.planCode + "\",\"planType\":\"INDIVIDUAL\",\"pinCode\":\""+ val.pincode +"\",\"policyTerm\":1,\"insurerCode\":\"SVAAS\",\"fullName\":\""+ val.insuredfirstName+" "+val.insuredlastName + "\",\"mobile\":\""+val.insuredmobile+"\"}}}}},";
+//            line = "{\"businessType\":\"" + val.pincode + "\", \"productCode\":" + val.productCode + "},";
 //            line = line.replace("=", ":");
 //            line = line.replace("ekinCare", "\"ekinCare\"");
 //            line = line.replace("svaas", "\"svaas\"");
