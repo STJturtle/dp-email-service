@@ -159,18 +159,28 @@ public class Xtest {
         String line = null;
         pw.println("[");
         lists.remove(0);
+
+        Map<String, String> planCodeMapper = Map.of("OPD Lite", "OPD_LITE", "OPD Hero", "OPD_HERO");
+
+
         for (var val : lists) {
 
-            line = """                    
-{"quoteRequest":{"data": {"businessType":"NEW", "productCode": "wellness", "premiumRequest":{"riskInsured":{"planCode":"%plancode%","planType":"INDIVIDUAL","pinCode": "%pincode%","policyTerm":1,"insurerCode":"SVAAS","fullName": "%fullname%","mobile":"%mobile%"}}}}},
-{"proposalRequest":{"personalDetails":{"title":"%title%","firstName":"%firstName%","lastName":"%firstName%","email":"%email%","gender":"%gender%","mobile":"%mobile%","dob":"%dob%","annualSalary":"0"},"registeredAddress":{"city":"%city%","pincode":"%pincode%","address1":"%address1%","address2":""},"otherDetails":{},"insuredMembers":[{"name":"%fullname%","dob":"%dob%","type":"SELF"}]}},
-{"paymentRequest":{"data":{"productCode":"wellness","insurerCode":"SVAAS"}}}
-""";
+            line = """
+            {"quoteRequest":{"data": {"businessType":"NEW", "productCode": "wellness", "premiumRequest":{"riskInsured":{"planCode":"%plancode%","planType":"INDIVIDUAL","pinCode": "%pincode%","policyTerm":1,"insurerCode":"SVAAS","fullName": "%fullname%","mobile":"%mobile%"}}}},
+            "proposalRequest":{"data":{"premiumResultId":"","referenceId":"","insurerCode": "SVAAS","productCode": "wellness","personalDetails":{"title":"%title%","firstName":"%firstName%","lastName":"%firstName%","email":"%email%","gender":"%gender%","mobile":"%mobile%","dob":"%dob%","annualSalary":"0"},"registeredAddress":{"city":"%city%","pincode":"%pincode%","address1":"%address1%","address2":""},"otherDetails":{},"insuredMembers":[{"name":"%fullname%","dob":"%dob%","type":"SELF"}]}},
+            "paymentRequest":{"data":{"productCode":"wellness","insurerCode":"SVAAS"}}},
+            """;
+
+//            line = """
+//                    {"quoteRequest":{"data": {"businessType":"NEW", "productCode": "wellness", "premiumRequest":{"riskInsured":{"planCode":"%plancode%","planType":"INDIVIDUAL","pinCode": "%pincode%","policyTerm":1,"insurerCode":"SVAAS","fullName": "%fullname%","mobile":"%mobile%"}}}}},
+//                    {"proposalRequest":{"personalDetails":{"title":"%title%","firstName":"%firstName%","lastName":"%firstName%","email":"%email%","gender":"%gender%","mobile":"%mobile%","dob":"%dob%","annualSalary":"0"},"registeredAddress":{"city":"%city%","pincode":"%pincode%","address1":"%address1%","address2":""},"otherDetails":{},"insuredMembers":[{"name":"%fullname%","dob":"%dob%","type":"SELF"}]}},
+//                    {"paymentRequest":{"data":{"productCode":"wellness","insurerCode":"SVAAS"}}},
+//                    """;
 
 
-            line = line.replace("%plancode%", val.planCode).replace("%pincode%", val.pincode).replace("%fullname%", val.insuredfirstName+" "+val.insuredlastName)
+            line = line.replace("%plancode%", planCodeMapper.get(val.planCode)).replace("%pincode%", val.pincode).replace("%fullname%", val.insuredfirstName + " " + val.insuredlastName)
                     .replace("%mobile%", val.insuredmobile).replace("%title%", val.InsuredTitle).replace("%firstName%", val.insuredfirstName).replace("%lastName%", val.insuredlastName)
-                    .replace("%email%", val.insuredEmail).replace("%gender%", val.insuredgender).replace("%dob%", val.insureddob).replace("%city%", val.city).replace("%address1%", val.address1).replace("\n", "");
+                    .replace("%email%", val.insuredEmail).replace("%gender%", val.insuredgender).replace("%dob%", updateDateFormat(val.insureddob)).replace("%city%", val.city).replace("%address1%", val.address1).replace("\n", "");
 
 //            line = "{\"quoteRequest\":{\"data\": {\"businessType\":\"NEW\", \"productCode\": \"wellness\", \"premiumRequest\":{\"riskInsured\":{\"planCode\":\"" + val.planCode + "\",\"planType\":\"INDIVIDUAL\",\"pinCode\":\""+ val.pincode +"\",\"policyTerm\":1,\"insurerCode\":\"SVAAS\",\"fullName\":\""+ val.insuredfirstName+" "+val.insuredlastName + "\",\"mobile\":\""+val.insuredmobile+"\"}}}}},";
 //            line = "{\"businessType\":\"" + val.pincode + "\", \"productCode\":" + val.productCode + "},";
@@ -195,5 +205,12 @@ public class Xtest {
         pw.println("]");
 
         pw.flush();
+    }
+
+
+    public static String updateDateFormat(String dateF) {
+
+        String[] vals = dateF.split("/");
+        return vals[1] + "/" + vals[0] + "/" + vals[2];
     }
 }
