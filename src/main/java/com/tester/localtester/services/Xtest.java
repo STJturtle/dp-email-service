@@ -164,7 +164,7 @@ public class Xtest {
             line = """                    
 {"quoteRequest":{"data": {"businessType":"NEW", "productCode": "wellness", "premiumRequest":{"riskInsured":{"planCode":"%plancode%","planType":"INDIVIDUAL","pinCode": "%pincode%","policyTerm":1,"insurerCode":"SVAAS","fullName": "%fullname%","mobile":"%mobile%"}}}}},
 {"proposalRequest":{"personalDetails":{"title":"%title%","firstName":"%firstName%","lastName":"%firstName%","email":"%email%","gender":"%gender%","mobile":"%mobile%","dob":"%dob%","annualSalary":"0"},"registeredAddress":{"city":"%city%","pincode":"%pincode%","address1":"%address1%","address2":""},"otherDetails":{},"insuredMembers":[{"name":"%fullname%","dob":"%dob%","type":"SELF"}]}},
-{"data":{"productCode":"mobile","insurerCode":"HDFC","proposalId":"64be7afb1e22ef213bcb1e8b","referenceId":"AH1I8NWB9C0"}}
+{"paymentRequest":{"data":{"productCode":"wellness","insurerCode":"SVAAS"}}}
 """;
 
 
