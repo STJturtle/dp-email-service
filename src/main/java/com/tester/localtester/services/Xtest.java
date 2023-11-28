@@ -17,8 +17,9 @@ public class Xtest {
 
         Map<String, String> mailData = new HashMap<>();
 
+        int count = 9;
         String fileDirectory = "/Users/sumitjadiya/Downloads/";
-        Reader csvFile = new FileReader(fileDirectory + "Copy of Wellness Pilot - Sheet1.csv");
+        Reader csvFile = new FileReader(fileDirectory + "wellness_data - "+ count +".csv");
 
         String[] HEADERS = {
                 "businessType",
@@ -154,13 +155,14 @@ public class Xtest {
 //        }
         System.out.println("]);");
 
-        File tempFile = new File(fileDirectory + "tempfile.json");
+        File tempFile = new File(fileDirectory + "final"+count+".json");
         PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
         String line = null;
         pw.println("[");
         lists.remove(0);
 
         Map<String, String> planCodeMapper = Map.of("OPD Lite", "OPD_LITE", "OPD Hero", "OPD_HERO");
+        StringBuffer sb = new StringBuffer();
 
 
         for (var val : lists) {
@@ -180,7 +182,7 @@ public class Xtest {
 
             line = line.replace("%plancode%", planCodeMapper.get(val.planCode)).replace("%pincode%", val.pincode).replace("%fullname%", val.insuredfirstName + " " + val.insuredlastName)
                     .replace("%mobile%", val.insuredmobile).replace("%title%", val.InsuredTitle).replace("%firstName%", val.insuredfirstName).replace("%lastName%", val.insuredlastName)
-                    .replace("%email%", val.insuredEmail).replace("%gender%", val.insuredgender).replace("%dob%", updateDateFormat(val.insureddob)).replace("%city%", val.city).replace("%address1%", val.address1).replace("\n", "");
+                    .replace("%email%", val.insuredEmail).replace("%gender%", val.insuredgender).replace("%dob%", (val.insureddob)).replace("%city%", val.city).replace("%address1%", val.address1).replace("\n", "");
 
 //            line = "{\"quoteRequest\":{\"data\": {\"businessType\":\"NEW\", \"productCode\": \"wellness\", \"premiumRequest\":{\"riskInsured\":{\"planCode\":\"" + val.planCode + "\",\"planType\":\"INDIVIDUAL\",\"pinCode\":\""+ val.pincode +"\",\"policyTerm\":1,\"insurerCode\":\"SVAAS\",\"fullName\":\""+ val.insuredfirstName+" "+val.insuredlastName + "\",\"mobile\":\""+val.insuredmobile+"\"}}}}},";
 //            line = "{\"businessType\":\"" + val.pincode + "\", \"productCode\":" + val.productCode + "},";
@@ -200,8 +202,11 @@ public class Xtest {
 //            line = line.replace(svaasOPDPremiumConstant, "\"opd_Premium\"");
 //            line = line.replace(svaasOPDPlusConstant, "\"opd_Plus\"");
 //            line = line.replace(svaasOPDHeroConstant, "\"opd_Hero\"");
-            pw.println(line);
+//            pw.println(line);
+            sb.append(line);
         }
+        String finalString = sb.substring(0,sb.length()-1).toString();
+        pw.println(finalString);
         pw.println("]");
 
         pw.flush();
