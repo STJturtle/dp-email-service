@@ -1,7 +1,6 @@
 package com.tester.localtester.services;
 
 import com.tester.localtester.model.XtestModel;
-import lombok.Data;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 
@@ -17,9 +16,9 @@ public class Xtest {
 
         Map<String, String> mailData = new HashMap<>();
 
-        int count = 9;
+        int count = 10;
         String fileDirectory = "/Users/sumitjadiya/Downloads/";
-        Reader csvFile = new FileReader(fileDirectory + "wellness_data - "+ count +".csv");
+        Reader csvFile = new FileReader(fileDirectory + "wellness_data - " + count + ".csv");
 
         String[] HEADERS = {
                 "businessType",
@@ -155,7 +154,7 @@ public class Xtest {
 //        }
         System.out.println("]);");
 
-        File tempFile = new File(fileDirectory + "final"+count+".json");
+        File tempFile = new File(fileDirectory + "final" + count + ".json");
         PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
         String line = null;
         pw.println("[");
@@ -168,10 +167,10 @@ public class Xtest {
         for (var val : lists) {
 
             line = """
-            {"quoteRequest":{"data": {"businessType":"NEW", "productCode": "wellness", "premiumRequest":{"riskInsured":{"planCode":"%plancode%","planType":"INDIVIDUAL","pinCode": "%pincode%","policyTerm":1,"insurerCode":"SVAAS","fullName": "%fullname%","mobile":"%mobile%"}}}},
-            "proposalRequest":{"data":{"premiumResultId":"","referenceId":"","insurerCode": "SVAAS","productCode": "wellness","personalDetails":{"title":"%title%","firstName":"%firstName%","lastName":"%firstName%","email":"%email%","gender":"%gender%","mobile":"%mobile%","dob":"%dob%","annualSalary":"0"},"registeredAddress":{"city":"%city%","pincode":"%pincode%","address1":"%address1%","address2":""},"otherDetails":{},"insuredMembers":[{"name":"%fullname%","dob":"%dob%","type":"SELF"}]}},
-            "paymentRequest":{"data":{"productCode":"wellness","insurerCode":"SVAAS"}}},
-            """;
+                    {"quoteRequest":{"data": {"businessType":"NEW", "productCode": "wellness", "premiumRequest":{"riskInsured":{"planCode":"%plancode%","planType":"INDIVIDUAL","pinCode": "%pincode%","policyTerm":1,"insurerCode":"SVAAS","fullName": "%fullname%","mobile":"%mobile%"}}}},
+                    "proposalRequest":{"data":{"premiumResultId":"","referenceId":"","insurerCode": "SVAAS","productCode": "wellness","personalDetails":{"title":"%title%","firstName":"%firstName%","lastName":"%firstName%","email":"%email%","gender":"%gender%","mobile":"%mobile%","dob":"%dob%","annualSalary":"0"},"registeredAddress":{"city":"%city%","pincode":"%pincode%","address1":"%address1%","address2":""},"otherDetails":{},"insuredMembers":[{"name":"%fullname%","dob":"%dob%","type":"SELF"}]}},
+                    "paymentRequest":{"data":{"productCode":"wellness","insurerCode":"SVAAS"}}},
+                    """;
 
 //            line = """
 //                    {"quoteRequest":{"data": {"businessType":"NEW", "productCode": "wellness", "premiumRequest":{"riskInsured":{"planCode":"%plancode%","planType":"INDIVIDUAL","pinCode": "%pincode%","policyTerm":1,"insurerCode":"SVAAS","fullName": "%fullname%","mobile":"%mobile%"}}}}},
@@ -205,7 +204,7 @@ public class Xtest {
 //            pw.println(line);
             sb.append(line);
         }
-        String finalString = sb.substring(0,sb.length()-1).toString();
+        String finalString = sb.substring(0, sb.length() - 1).toString();
         pw.println(finalString);
         pw.println("]");
 
